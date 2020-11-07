@@ -8,6 +8,15 @@ import metiers.metierprojetpython
 #fichiers authorisés
 ALLOWED_EXTENSIONS = ['gif','jpeg','jpg','png']
 
+def aiguiller():
+    """
+    Renvoie tous les identifiants métiers des images.
+    Returns
+    -------
+    Tableau d'identifiants métier : [string]
+    """
+    return metiers.metierprojetpython.retourner_all_id_metier()
+
 def controler_format(request):
     """
     Contrôle si l'extension du fichier est autorisée et en fonction oriente le traitement.

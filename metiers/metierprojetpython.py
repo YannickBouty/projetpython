@@ -18,6 +18,22 @@ DATABASE = 'sqlite:///database/projetpython.db'
 engine = create_engine(DATABASE)
 Session = sessionmaker(bind=engine)
 
+def retourner_all_id_metier():
+    """
+    Renvoie tous les identifiants métiers des images.
+    Returns
+    -------
+    Tableau d'identifiants métier : [string]
+    """
+    session = Session()
+    liste_retour = []
+    try:
+        for row in session.query(Fichier).order_by(Fichier.identifiantMetier):
+            liste_retour.append(row.identifiantMetier)
+        return jsonify(liste_retour)
+    except NoResultFound:
+        return 'Aucune image connue !\n'
+
 def retourner_fichier(idfile):
     """
     Retourne les métadonnées enregistrées en base de données d'un fichier uploadé.

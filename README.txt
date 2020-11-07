@@ -46,7 +46,14 @@ Exemple : curl -u "benoitlarroque:mssio" "http://127.0.0.1:5000/getfilebyid/Iden
 
 Vous pouvez cliquer sur le lien proposé pour afficher la vignette dans votre navigateur.
 
-3/Dans le fichier "automatisation-tests-fonctionnels-projetpython.sh", vous trouverez des exemples de tests fonctionnels.
+3/Test du service de récupération de tous les identifiants métier des images connues :
+Une authentification est nécessaire avec : username = benoitlarroque et password = mssio
+
+Exemple : curl -u "benoitlarroque:mssio" http://127.0.0.1:5000/getall
+
+NOTER LES CHAINES DE CARACTERES RETOURNEES ! Il s'agit des identifiants métier pour afficher les informations des images uploadées.
+
+4/Dans le fichier "automatisation-tests-fonctionnels-projetpython.sh", vous trouverez des exemples de tests fonctionnels.
 Vous pouvez l'exécuter avec la commande :
 ./automatisation-tests-fonctionnels-projetpython.sh
 

@@ -36,6 +36,20 @@ def authorisation_acces():
     #authorisation ok : retourne True
     return bool(nom_utilisateur_hash==NOM_UTILISATEUR and mot_de_passe_hash==MOT_DE_PASSE)
 
+@app.route('/getall')
+def get_all():
+    """
+    Ce service web renvoie tous les identifiants métiers des images.
+    Returns
+    -------
+    Tableau d'identifiants métier : [string]
+    """
+    if authorisation_acces():
+        # Auhtorisation d'accès
+        return controlleurs.controlleurprojetpython.aiguiller()
+    else:
+        abort(401)
+
 @app.route('/getfilebyid/<idfile>')
 def get_file_by_id(idfile):
     """

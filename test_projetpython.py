@@ -10,11 +10,11 @@ class TestProjetPython(unittest.TestCase):
         with app.test_client() as client:
             username = 'benoitlarroque'
             password = 'mssio'
-            maReponse = client.get('/getfilebyid/2020110421321409bbca3a8bc73036', \
+            maReponse = client.get('/getfilebyid/20201107204148d48a8730068e1a89', \
                     headers={'Authorization': _basic_auth_str(username, password)})
             maReponseJson = maReponse.get_json()
             monIdentifiantFichier = maReponseJson['Identifiant métier']
-            self.assertEqual(monIdentifiantFichier, '2020110421321409bbca3a8bc73036')
+            self.assertEqual(monIdentifiantFichier, '20201107204148d48a8730068e1a89')
 
     def test_getFileById_userOk_idFileKo(self):
         with app.test_client() as client:
@@ -36,7 +36,7 @@ class TestProjetPython(unittest.TestCase):
         with app.test_client() as client:
             username = 'utilisateur'
             password = 'mdp'
-            maReponse = client.get('/getfilebyid/2020110421321409bbca3a8bc73036', \
+            maReponse = client.get('/getfilebyid/20201107204148d48a8730068e1a89', \
                     headers={'Authorization': _basic_auth_str(username, password)})
             self.assertEqual(maReponse.status_code, 401)
     
@@ -100,3 +100,24 @@ class TestProjetPython(unittest.TestCase):
                     data=maData, content_type='multipart/form-data')
             self.assertIn(b'Acc\xc3\xa8s autoris\xc3\xa9 mais le fichier ne porte pas une extension autoris\xc3\xa9e !\n', \
                     maReponse.data)
+
+    def test_getall_userok(self):
+        with app.test_client() as client:
+            username = 'benoitlarroque'
+            password = 'mssio'
+            maReponse = client.get('/getall', \
+                    headers={'Authorization': _basic_auth_str(username, password)})
+            if not maReponse.data:
+                #liste vide
+                self.assertIn(b'Aucune image connue !\n', maReponse.data)
+            else:
+                #liste non vide
+                self.assertNotEqual(len(maReponse.data), 0)
+
+    def test_getall_userko(self):
+        with app.test_client() as client:
+            username = 'utilisateur'
+            password = 'mdp'
+            maReponse = client.get('/getall', \
+                    headers={'Authorization': _basic_auth_str(username, password)})
+            self.assertEqual(maReponse.status_code, 401)
